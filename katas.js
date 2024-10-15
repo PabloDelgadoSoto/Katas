@@ -2,15 +2,39 @@ window.onload = function () {
   console.log();
 }
 
-function domainName(url){
-  //extract site of url
-  let patron = /https?:\/\/(www\.)?|www\./g;
-  patron.exec(url);
-  url = url.substring(patron.lastIndex);
-  patron = /\w+(\-\w*)*\./;
-  url = patron.exec(url)[0];
-  return url.substring(0, url.length-1);
-}
+function solution(list){
+  // list of ordered integers with hyphens when there is a range of at least 3 consecutive numbers
+  let map = new Map();
+  for(let i = 0; i < list.length; i++){
+    let cont = 1;
+    while(list.includes(list[i]+cont)){
+      cont++;
+    }
+    map.set(list[i], cont);
+    cont>1?i+=cont-1:"";
+  }
+  let sol = "";
+  for(const[key,value] of map){
+    if(value>2){
+      sol+=key+"-"+(key+value-1)+",";
+    } else {
+      for(let i = 0; i < value; i++){
+        sol+=+(key+i)+",";
+      }
+    }
+  }
+  return sol.substring(0, sol.length-1);
+ }
+
+// function domainName(url){
+//   //extract site of url
+//   let patron = /https?:\/\/(www\.)?|www\./g;
+//   patron.exec(url);
+//   url = url.substring(patron.lastIndex);
+//   patron = /\w+(\-\w*)*\./;
+//   url = patron.exec(url)[0];
+//   return url.substring(0, url.length-1);
+// }
 
 // function order(words){
 //   // put the words in the order they are given with the number in that word
