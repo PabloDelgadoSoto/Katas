@@ -2,26 +2,42 @@ window.onload = function () {
   console.log();
 }
 
-function dirReduc(arr){
-  // array with directions get the directions that cancel out
-  const dir={
-    "NORTH":"SOUTH",
-    "SOUTH":"NORTH",
-    "EAST":"WEST",
-    "WEST":"EAST"
+function digPow(n, p){
+  // given two numbers, n raised to consecutive powers starting from p equals to n * p
+  let nums = n.toString().split("");
+  let resultado = [];
+  let sol = 0;
+  for(let i = 0; i < nums.length; i++){
+    resultado.push(parseInt(nums[i])**(p+i));
+    sol+=resultado[i];
   }
-  let cont = 0;
-  while(cont < arr.length){
-    if(arr[cont+1]==dir[arr[cont]]){
-      arr.splice(cont+1, 1);
-      arr.splice(cont, 1);
-      cont=0;
-    } else{
-      cont++;
-    }
+  let c = sol/n;
+  if(sol%n==0){
+    return c;
   }
-  return arr;
+  return -1;
 }
+
+// function dirReduc(arr){
+//   // array with directions get the directions that cancel out
+//   const dir={
+//     "NORTH":"SOUTH",
+//     "SOUTH":"NORTH",
+//     "EAST":"WEST",
+//     "WEST":"EAST"
+//   }
+//   let cont = 0;
+//   while(cont < arr.length){
+//     if(arr[cont+1]==dir[arr[cont]]){
+//       arr.splice(cont+1, 1);
+//       arr.splice(cont, 1);
+//       cont=0;
+//     } else{
+//       cont++;
+//     }
+//   }
+//   return arr;
+// }
 
 // function isPangram(string){
 //   //check if its pangram
