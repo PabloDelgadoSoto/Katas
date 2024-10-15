@@ -2,14 +2,33 @@ window.onload = function () {
   console.log();
 }
 
-function findNextSquare(sq) {
-  // Return the next square if sq is a perfect square, -1 otherwise
-  let resultado = Math.sqrt(sq);
-  if(resultado%1 == 0){
-    return (resultado+1)**2;
+function duplicateEncode(word){
+  // Write '(' when a character appears once and ')' when it appears more than once
+  let visto = new Map();
+  word = word.toLowerCase();
+  for(let i = 0; i < word.length; i++){
+    let a = visto.get(word[i]);
+    if(a){
+      visto.set(word[i], a+1);
+      continue;
+    }
+    visto.set(word[i], 1);
   }
-  return -1;
+  let str = '';
+  for(let i = 0; i < word.length; i++){
+    visto.get(word[i]) > 1?str+=")":str+="(";
+  }
+  return str;
 }
+
+// function findNextSquare(sq) {
+//   // Return the next square if sq is a perfect square, -1 otherwise
+//   let resultado = Math.sqrt(sq);
+//   if(resultado%1 == 0){
+//     return (resultado+1)**2;
+//   }
+//   return -1;
+// }
 
 // function findOdd(A) {
 //   // find what element from given array appears an odd number of times
