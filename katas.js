@@ -2,14 +2,32 @@ window.onload = function () {
   console.log();
 }
 
-function friend(friends){
-  //4 letters in array
-  let arr = [];
-  friends.forEach(e => {
-    e.length==4?arr.push(e):"";
-  });
-  return arr;
+function findMissingLetter(array){
+  //find the missing letter in an arary
+  let x1;
+  let x2;
+  let sol;
+  for(let i = 0; i < array.length; i++){
+    x1 = array[i].charCodeAt(0);
+    if(i !=0){
+      if(x1!=x2){
+        sol=x2;
+        break;
+      }
+    }
+    x2 = x1 + 1;
+  }
+  return String.fromCharCode(sol);
 }
+
+// function friend(friends){
+//   //4 letters in array
+//   let arr = [];
+//   friends.forEach(e => {
+//     e.length==4?arr.push(e):"";
+//   });
+//   return arr;
+// }
 
 // function getCount(str) {
 //   // number of vowels in string
