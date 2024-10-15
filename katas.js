@@ -2,24 +2,42 @@ window.onload = function () {
   console.log();
 }
 
-function duplicateEncode(word){
-  // Write '(' when a character appears once and ')' when it appears more than once
-  let visto = new Map();
-  word = word.toLowerCase();
-  for(let i = 0; i < word.length; i++){
-    let a = visto.get(word[i]);
-    if(a){
-      visto.set(word[i], a+1);
-      continue;
-    }
-    visto.set(word[i], 1);
+function isValidWalk(walk) {
+  //perfect grid given an array of positions, will it take exactly 10 mins and will you end on the same spot
+  let direcciones = {
+    'n':[0, 1],
+    's':[0, -1],
+    'e':[1, 1],
+    'w':[1, -1]
   }
-  let str = '';
-  for(let i = 0; i < word.length; i++){
-    visto.get(word[i]) > 1?str+=")":str+="(";
+  let lugar = [0, 0];
+  for(let i = 0; i < walk.length; i++){
+    lugar[direcciones[walk[i]][0]] = lugar[direcciones[walk[i]][0]] + direcciones[walk[i]][1];
   }
-  return str;
+  if(lugar[0]!=0||lugar[1]!=0||walk.length!=10){
+    return false;
+  }
+  return true;
 }
+
+// function duplicateEncode(word){
+//   // Write '(' when a character appears once and ')' when it appears more than once
+//   let visto = new Map();
+//   word = word.toLowerCase();
+//   for(let i = 0; i < word.length; i++){
+//     let a = visto.get(word[i]);
+//     if(a){
+//       visto.set(word[i], a+1);
+//       continue;
+//     }
+//     visto.set(word[i], 1);
+//   }
+//   let str = '';
+//   for(let i = 0; i < word.length; i++){
+//     visto.get(word[i]) > 1?str+=")":str+="(";
+//   }
+//   return str;
+// }
 
 // function findNextSquare(sq) {
 //   // Return the next square if sq is a perfect square, -1 otherwise
