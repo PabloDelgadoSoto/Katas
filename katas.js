@@ -2,22 +2,32 @@ window.onload = function () {
   console.log();
 }
 
-function order(words){
-  // put the words in the order they are given with the number in that word
-  if(words==""){
-    return "";
-  }
-  let palabras = words.split(" ");
-  let map = new Map();
-  let solucion = "";
-  for(let i = 0; i < palabras.length; i++){
-    map.set(parseInt(palabras[i].match(/\d/)[0]), palabras[i]+" ");
-  }
-  for(let i = 1; i <= map.size; i++){
-    solucion+=map.get(i);
-  }
-  return solucion.trim();
+function domainName(url){
+  //extract site of url
+  let patron = /https?:\/\/(www\.)?|www\./g;
+  patron.exec(url);
+  url = url.substring(patron.lastIndex);
+  patron = /\w+(\-\w*)*\./;
+  url = patron.exec(url)[0];
+  return url.substring(0, url.length-1);
 }
+
+// function order(words){
+//   // put the words in the order they are given with the number in that word
+//   if(words==""){
+//     return "";
+//   }
+//   let palabras = words.split(" ");
+//   let map = new Map();
+//   let solucion = "";
+//   for(let i = 0; i < palabras.length; i++){
+//     map.set(parseInt(palabras[i].match(/\d/)[0]), palabras[i]+" ");
+//   }
+//   for(let i = 1; i <= map.size; i++){
+//     solucion+=map.get(i);
+//   }
+//   return solucion.trim();
+// }
 
 // function digPow(n, p){
 //   // given two numbers, n raised to consecutive powers starting from p equals to n * p
