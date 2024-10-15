@@ -2,18 +2,39 @@ window.onload = function () {
   console.log();
 }
 
-function isPangram(string){
-  //check if its pangram
-  let is = true;
-  string = string.toLowerCase();
-  string = string.replace(/\s/, "");
-  string = string.replace(/[.]/, "");
-  let arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-  for(let i = 0; i < arr.length; i++){
-    string.includes(arr[i])?"":is=false;
+function dirReduc(arr){
+  // array with directions get the directions that cancel out
+  const dir={
+    "NORTH":"SOUTH",
+    "SOUTH":"NORTH",
+    "EAST":"WEST",
+    "WEST":"EAST"
   }
-  return is;
+  let cont = 0;
+  while(cont < arr.length){
+    if(arr[cont+1]==dir[arr[cont]]){
+      arr.splice(cont+1, 1);
+      arr.splice(cont, 1);
+      cont=0;
+    } else{
+      cont++;
+    }
+  }
+  return arr;
 }
+
+// function isPangram(string){
+//   //check if its pangram
+//   let is = true;
+//   string = string.toLowerCase();
+//   string = string.replace(/\s/, "");
+//   string = string.replace(/[.]/, "");
+//   let arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+//   for(let i = 0; i < arr.length; i++){
+//     string.includes(arr[i])?"":is=false;
+//   }
+//   return is;
+// }
 
 // function generateHashtag (str) {
 //   //create hashtag, no spaces, all words first letter uppercase, >140 false, empty false
