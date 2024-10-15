@@ -2,29 +2,74 @@ window.onload = function () {
   console.log();
 }
 
-function solution(list){
-  // list of ordered integers with hyphens when there is a range of at least 3 consecutive numbers
-  let map = new Map();
-  for(let i = 0; i < list.length; i++){
-    let cont = 1;
-    while(list.includes(list[i]+cont)){
-      cont++;
-    }
-    map.set(list[i], cont);
-    cont>1?i+=cont-1:"";
+let str = "";
+let cont = 0;
+let order = ['second', 'minute', 'hour', 'day', 'year'];
+const time = {
+  0:60,
+  1:60,
+  2:24,
+  3:365,
+  4:150
+}
+
+const calc = function(pos, tiempo){
+  let final;
+  let comprobar = tiempo>=time[pos];
+  let redondeo = Math.trunc(tiempo%time[pos]);
+  if(cont==1 && redondeo>0){
+    str=" and "+str;
+  }else if(cont>1 && redondeo>0){
+    str=", "+str;
   }
-  let sol = "";
-  for(const[key,value] of map){
-    if(value>2){
-      sol+=key+"-"+(key+value-1)+",";
-    } else {
-      for(let i = 0; i < value; i++){
-        sol+=+(key+i)+",";
-      }
+  redondeo>1?final="s":final="";
+  redondeo!=0?str = redondeo+" "+order[pos]+final+str:cont--;
+  cont++;
+  if(comprobar){
+    tiempo = tiempo/time[pos];
+    return Math.trunc(tiempo);
+  }
+}
+
+function formatDuration (seconds) {
+  // format second to be readable for a human
+  str = "";
+  cont = 0;
+  for(let i = 0; i < order.length; i++){
+    seconds = calc(i, seconds);
+    if(!seconds){
+      break;
     }
   }
-  return sol.substring(0, sol.length-1);
- }
+  if(str==""){
+    str="now";
+  }
+  return str.trim();
+}
+
+// function solution(list){
+//   // list of ordered integers with hyphens when there is a range of at least 3 consecutive numbers
+//   let map = new Map();
+//   for(let i = 0; i < list.length; i++){
+//     let cont = 1;
+//     while(list.includes(list[i]+cont)){
+//       cont++;
+//     }
+//     map.set(list[i], cont);
+//     cont>1?i+=cont-1:"";
+//   }
+//   let sol = "";
+//   for(const[key,value] of map){
+//     if(value>2){
+//       sol+=key+"-"+(key+value-1)+",";
+//     } else {
+//       for(let i = 0; i < value; i++){
+//         sol+=+(key+i)+",";
+//       }
+//     }
+//   }
+//   return sol.substring(0, sol.length-1);
+//  }
 
 // function domainName(url){
 //   //extract site of url
