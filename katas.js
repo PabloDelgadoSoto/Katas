@@ -2,15 +2,24 @@ window.onload = function () {
   console.log();
 }
 
-function getCount(str) {
-  // number of vowels in string
-  let patron = /[aeiou]/gi;
-  let m = str.match(patron);
-  if(m){
-    return m.length;
-  }
-  return 0;
+function friend(friends){
+  //4 letters in array
+  let arr = [];
+  friends.forEach(e => {
+    e.length==4?arr.push(e):"";
+  });
+  return arr;
 }
+
+// function getCount(str) {
+//   // number of vowels in string
+//   let patron = /[aeiou]/gi;
+//   let m = str.match(patron);
+//   if(m){
+//     return m.length;
+//   }
+//   return 0;
+// }
 
 // function isValidWalk(walk) {
 //   //perfect grid given an array of positions, will it take exactly 10 mins and will you end on the same spot
