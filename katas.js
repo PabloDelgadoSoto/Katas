@@ -2,23 +2,41 @@ window.onload = function () {
   console.log();
 }
 
-function findMissingLetter(array){
-  //find the missing letter in an arary
-  let x1;
-  let x2;
-  let sol;
-  for(let i = 0; i < array.length; i++){
-    x1 = array[i].charCodeAt(0);
-    if(i !=0){
-      if(x1!=x2){
-        sol=x2;
-        break;
-      }
+function generateHashtag (str) {
+  //create hashtag, no spaces, all words first letter uppercase, >140 false, empty false
+  let sol = "#";
+  str = str.replace(/\s{2,}/g, " ");
+  if(str != " " && str != ""){
+    s = str.split(" ");
+    for(let i = 0; i < s.length; i++){
+      sol += s[i].charAt(0).toUpperCase();
+      sol += s[i].substring(1);
     }
-    x2 = x1 + 1;
+    if(sol.length>140){
+      return false;
+    }
+    return sol;
   }
-  return String.fromCharCode(sol);
+  return false;
 }
+
+// function findMissingLetter(array){
+//   //find the missing letter in an arary
+//   let x1;
+//   let x2;
+//   let sol;
+//   for(let i = 0; i < array.length; i++){
+//     x1 = array[i].charCodeAt(0);
+//     if(i !=0){
+//       if(x1!=x2){
+//         sol=x2;
+//         break;
+//       }
+//     }
+//     x2 = x1 + 1;
+//   }
+//   return String.fromCharCode(sol);
+// }
 
 // function friend(friends){
 //   //4 letters in array
