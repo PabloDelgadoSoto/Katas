@@ -2,23 +2,36 @@ window.onload = function () {
   console.log();
 }
 
-function generateHashtag (str) {
-  //create hashtag, no spaces, all words first letter uppercase, >140 false, empty false
-  let sol = "#";
-  str = str.replace(/\s{2,}/g, " ");
-  if(str != " " && str != ""){
-    s = str.split(" ");
-    for(let i = 0; i < s.length; i++){
-      sol += s[i].charAt(0).toUpperCase();
-      sol += s[i].substring(1);
-    }
-    if(sol.length>140){
-      return false;
-    }
-    return sol;
+function isPangram(string){
+  //check if its pangram
+  let is = true;
+  string = string.toLowerCase();
+  string = string.replace(/\s/, "");
+  string = string.replace(/[.]/, "");
+  let arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+  for(let i = 0; i < arr.length; i++){
+    string.includes(arr[i])?"":is=false;
   }
-  return false;
+  return is;
 }
+
+// function generateHashtag (str) {
+//   //create hashtag, no spaces, all words first letter uppercase, >140 false, empty false
+//   let sol = "#";
+//   str = str.replace(/\s{2,}/g, " ");
+//   if(str != " " && str != ""){
+//     s = str.split(" ");
+//     for(let i = 0; i < s.length; i++){
+//       sol += s[i].charAt(0).toUpperCase();
+//       sol += s[i].substring(1);
+//     }
+//     if(sol.length>140){
+//       return false;
+//     }
+//     return sol;
+//   }
+//   return false;
+// }
 
 // function findMissingLetter(array){
 //   //find the missing letter in an arary
