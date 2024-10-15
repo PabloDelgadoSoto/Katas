@@ -2,23 +2,33 @@ window.onload = function () {
   console.log();
 }
 
-function isValidWalk(walk) {
-  //perfect grid given an array of positions, will it take exactly 10 mins and will you end on the same spot
-  let direcciones = {
-    'n':[0, 1],
-    's':[0, -1],
-    'e':[1, 1],
-    'w':[1, -1]
+function getCount(str) {
+  // number of vowels in string
+  let patron = /[aeiou]/gi;
+  let m = str.match(patron);
+  if(m){
+    return m.length;
   }
-  let lugar = [0, 0];
-  for(let i = 0; i < walk.length; i++){
-    lugar[direcciones[walk[i]][0]] = lugar[direcciones[walk[i]][0]] + direcciones[walk[i]][1];
-  }
-  if(lugar[0]!=0||lugar[1]!=0||walk.length!=10){
-    return false;
-  }
-  return true;
+  return 0;
 }
+
+// function isValidWalk(walk) {
+//   //perfect grid given an array of positions, will it take exactly 10 mins and will you end on the same spot
+//   let direcciones = {
+//     'n':[0, 1],
+//     's':[0, -1],
+//     'e':[1, 1],
+//     'w':[1, -1]
+//   }
+//   let lugar = [0, 0];
+//   for(let i = 0; i < walk.length; i++){
+//     lugar[direcciones[walk[i]][0]] = lugar[direcciones[walk[i]][0]] + direcciones[walk[i]][1];
+//   }
+//   if(lugar[0]!=0||lugar[1]!=0||walk.length!=10){
+//     return false;
+//   }
+//   return true;
+// }
 
 // function duplicateEncode(word){
 //   // Write '(' when a character appears once and ')' when it appears more than once
