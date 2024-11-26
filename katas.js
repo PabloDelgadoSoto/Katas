@@ -2,9 +2,76 @@ window.onload = function () {
   console.log();
 }
 
+//transform numbers to roman numbers y viceversa
+const numeros=[["I","V"],["X","L"],["C","D"],["M"]];
+const romanos = crearMapa();
+function crearMapa(){
+  map = new Map();
+  map.set("I",1);
+  map.set("V",5);
+  map.set("X",10);
+  map.set("L",50);
+  map.set("C",100);
+  map.set("D",500);
+  map.set("M",1000);
+  return map;
+}
+let resta=false;
+let sol;
+function calcularDigitoRomano(n, pos){
+  while(n>0){
+    if(n==9){
+      sol+=numeros[pos][0]+numeros[pos+1][0];
+      n-=9;
+    }else if(n>3){
+      if(n==4){
+        sol+=numeros[pos][0];
+      }
+      sol+=numeros[pos][1];
+      n-=5;
+    }else{
+      sol+=numeros[pos][0];
+      n-=1;
+    }
+  }
+}
+function calcularDesdeRomano(num, siguiente){
+  n=romanos.get(num);
+  s=romanos.get(siguiente);
+  if(n>s){
+    sol+=(n-s);
+    resta=true;
+  }else{
+    sol+=n;
+  }
+}
+
+class RomanNumerals {
+  static toRoman(num) {
+    num = num.toString();
+    let long = num.length;
+    num = num.split("");
+    sol="";
+    for(let i = 0; i < num.length; i++){
+      calcularDigitoRomano(num[i], (long-1)-i);
+    }
+    return sol;
+  }
+
+  static fromRoman(num){
+    num = num.split("");
+    sol=0;
+    for(let i = num.length-1; i >= 0; i--){
+      if(resta){resta=false;continue}
+      calcularDesdeRomano(num[i], num[i-1]);
+    }
+    return sol;
+  }
+}
+
+/*
 // hacerlo en una linea (no es mi solucion)
 // const determinant = m => m.length === 1 ? m[0][0] : m[0].reduce((s, n, i) => s + (i % 2 === 0 ? 1 : -1) * n * determinant(m.slice(1).map(r => r.filter((_, j) => j !== i))), 0);
-
 let guardar;
 let resultados;
 
@@ -74,6 +141,7 @@ function calcular(matriz) {
   }
   return importantes[0][0][0];
 }
+*/
 
 // function topThreeWords(text) {
 //   //return the top 3 most used words in a text
