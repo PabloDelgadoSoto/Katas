@@ -2,6 +2,25 @@ window.onload = function () {
   console.log();
 }
 
+function scramble(str1, str2){
+  // check if a string can be formed with the letters of another string, perfomance is important
+  let map = new Map();
+  for(let i = 0; i < str2.length; i++){
+    let ultimo = map.get(str2[i]);
+    !ultimo?map.set(str2[i], 1):map.set(str2[i], ultimo+1);
+  }
+  for(let i = 0; i < str1.length; i++){
+    map.set(str1[i], map.get(str1[i])-1);
+  }
+  for(const[key,value] of map){
+    if(value>0){
+      return false;
+    }
+  }
+  return true;
+}
+
+/*
 let str = "";
 let cont = 0;
 let order = ['second', 'minute', 'hour', 'day', 'year'];
@@ -46,6 +65,7 @@ function formatDuration (seconds) {
   }
   return str.trim();
 }
+*/
 
 // function solution(list){
 //   // list of ordered integers with hyphens when there is a range of at least 3 consecutive numbers
