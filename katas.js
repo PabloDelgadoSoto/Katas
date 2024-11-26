@@ -2,34 +2,107 @@ window.onload = function () {
   console.log();
 }
 
-function topThreeWords(text) {
-  //return the top 3 most used words in a text
-  text=text.replace(/[,./:|\s]+/g, " ").trim().split(" ");
-  let p = [];
-  text.forEach(e => {
-    if(e!="'"){
-      p.push(e.toLowerCase());
+// hacerlo en una linea (no es mi solucion)
+// const determinant = m => m.length === 1 ? m[0][0] : m[0].reduce((s, n, i) => s + (i % 2 === 0 ? 1 : -1) * n * determinant(m.slice(1).map(r => r.filter((_, j) => j !== i))), 0);
+
+let guardar;
+let resultados;
+
+function determinant(m) {
+  // return the determinant of the matrix passed in
+  guardar = [];
+  resultados = [];
+  for (let j = 0; j < m.length; j++) {
+    shrink(m, 0, j);
+  }
+  guardar.push(m);
+  return calcular(m);
+};
+
+function shrink(matriz, fila, columna) {
+  let nuevo = [];
+  let cont = 0;
+  for (let i = 0; i < matriz.length; i++) {
+    if (i == fila) { cont++; continue }
+    nuevo.push([]);
+    for (let j = 0; j < matriz[i].length; j++) {
+      if (j == columna) { continue }
+      nuevo[i - cont].push(matriz[i][j]);
     }
-  });
-  let palabras = new Map();
-  for(let i = 0; i < p.length; i++){
-    let comprobar = palabras.get(p[i])
-    if(comprobar){
-      palabras.set(p[i], comprobar+1);
-    } else {
-      palabras.set(p[i], 1);
+    if (nuevo[0].length >= 2) {
+      for (let x = 0; x < nuevo.length; x++) {
+        shrink(nuevo, 0, x);
+      }
     }
   }
-  const orden = new Map([...palabras.entries()].sort((a, b) => b[1] - a[1]));
-  let cont = 1;
-  let sol = [];
-  for (const [key,value] of orden) {
-    sol.push(key);
-    if(cont==3){break}
-    cont++;
-  }
-  return sol!=""?sol:[];
+  guardar.push(nuevo);
 }
+
+function calcular(matriz) {
+  let importantes = [];
+  for(let i = 0; i < guardar.length; i++){
+    if(guardar[i][0]==undefined || (guardar[i].length != guardar[i][0].length)){
+      continue;
+    }
+    importantes.push(guardar[i]);
+  }
+  for(let x = 1; x <= matriz.length; x++){
+    for(let i = 0; i < importantes.length; i++){
+      let long = importantes[i].length;
+      if(long==x+1){
+        let cont = 0;
+        let sol = [];
+        let quitar = [];
+        for(let j = 0; j < long; j++){
+          cont++;
+          let res = importantes[i][0][j]*importantes[i-long+j][0][0];
+          cont%2==0?res= res-(res*2):"";
+          sol.push(res);
+          quitar.push(i+(j-long));
+        }
+        let suma = 0;
+        for(let j = 0; j < sol.length; j++){
+          suma += sol[j];
+        }
+        importantes.splice(i, 1, [[suma]]);
+        quitar.reverse();
+        quitar.forEach(num => {
+          importantes.splice(num, 1);
+        });
+      }
+    }
+  }
+  return importantes[0][0][0];
+}
+
+// function topThreeWords(text) {
+//   //return the top 3 most used words in a text
+//   text=text.replace(/[,./:|\s]+/g, " ").trim().split(" ");
+//   let p = [];
+//   text.forEach(e => {
+//     if(e!="'"){
+//       p.push(e.toLowerCase());
+//     }
+//   });
+//   let palabras = new Map();
+//   for(let i = 0; i < p.length; i++){
+//     let comprobar = palabras.get(p[i])
+//     if(comprobar){
+//       palabras.set(p[i], comprobar+1);
+//     } else {
+//       palabras.set(p[i], 1);
+//     }
+//   }
+//   const orden = new Map([...palabras.entries()].sort((a, b) => b[1] - a[1]));
+//   let cont = 1;
+//   let sol = [];
+//   for (const [key,value] of orden) {
+//     sol.push(key);
+//     if(cont==3){break}
+//     cont++;
+//   }
+//   return sol!=""?sol:[];
+// }
 
 // function scramble(str1, str2){
 //   // check if a string can be formed with the letters of another string, perfomance is important
