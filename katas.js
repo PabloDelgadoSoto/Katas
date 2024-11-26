@@ -2,23 +2,52 @@ window.onload = function () {
   console.log();
 }
 
-function scramble(str1, str2){
-  // check if a string can be formed with the letters of another string, perfomance is important
-  let map = new Map();
-  for(let i = 0; i < str2.length; i++){
-    let ultimo = map.get(str2[i]);
-    !ultimo?map.set(str2[i], 1):map.set(str2[i], ultimo+1);
-  }
-  for(let i = 0; i < str1.length; i++){
-    map.set(str1[i], map.get(str1[i])-1);
-  }
-  for(const[key,value] of map){
-    if(value>0){
-      return false;
+function topThreeWords(text) {
+  //return the top 3 most used words in a text
+  text=text.replace(/[,./:|\s]+/g, " ").trim().split(" ");
+  let p = [];
+  text.forEach(e => {
+    if(e!="'"){
+      p.push(e.toLowerCase());
+    }
+  });
+  let palabras = new Map();
+  for(let i = 0; i < p.length; i++){
+    let comprobar = palabras.get(p[i])
+    if(comprobar){
+      palabras.set(p[i], comprobar+1);
+    } else {
+      palabras.set(p[i], 1);
     }
   }
-  return true;
+  const orden = new Map([...palabras.entries()].sort((a, b) => b[1] - a[1]));
+  let cont = 1;
+  let sol = [];
+  for (const [key,value] of orden) {
+    sol.push(key);
+    if(cont==3){break}
+    cont++;
+  }
+  return sol!=""?sol:[];
 }
+
+// function scramble(str1, str2){
+//   // check if a string can be formed with the letters of another string, perfomance is important
+//   let map = new Map();
+//   for(let i = 0; i < str2.length; i++){
+//     let ultimo = map.get(str2[i]);
+//     !ultimo?map.set(str2[i], 1):map.set(str2[i], ultimo+1);
+//   }
+//   for(let i = 0; i < str1.length; i++){
+//     map.set(str1[i], map.get(str1[i])-1);
+//   }
+//   for(const[key,value] of map){
+//     if(value>0){
+//       return false;
+//     }
+//   }
+//   return true;
+// }
 
 /*
 let str = "";
