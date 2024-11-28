@@ -2,6 +2,89 @@ window.onload = function () {
   console.log();
 }
 
+
+let arr;
+let max;
+let resultado;
+function isInteresting(number, awesomePhrases) {
+  // number with several conditions listed in the functions below
+  resultado = 0;
+  max = number + 2;
+  return comprobar(number, awesomePhrases);
+}
+
+function comprobar(num, awesomePhrases) {
+  if (num > max) { return }
+  num += "";
+  arr = num.split("");
+  num = parseInt(num);
+  if ((num > 99) && (followedByZeros() || sameNumber() || incrementing() || decrementing() || palindrome() || matchArray(num, awesomePhrases))) {
+    return 2;
+  } else {
+    let c = comprobar(num + 1, awesomePhrases);
+    if (c == 2) {
+      resultado = 1;
+    }
+  }
+  return resultado;
+}
+
+function followedByZeros() {
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] != 0) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function sameNumber() {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[0] != arr[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function incrementing() {
+  for (let i = 1; i < arr.length; i++) {
+    if (((parseInt(arr[i - 1]) + 1) != parseInt(arr[i]))) {
+      if(parseInt(arr[i-1])+1==10 && parseInt(arr[i])==0){
+        continue;
+      }
+      return false;
+    }
+  }
+  return true;
+}
+
+function decrementing() {
+  for (let i = 1; i < arr.length; i++) {
+    if ((parseInt(arr[i - 1]) - 1) != parseInt(arr[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function palindrome() {
+  let rev = [...arr];
+  arr.reverse();
+  let sRev = "";
+  let sArr = "";
+  for (let i = 0; i < arr.length; i++) {
+    sRev += rev[i];
+    sArr += arr[i];
+  }
+  return sRev == sArr;
+}
+
+function matchArray(num, array) {
+  return array.includes(num);
+}
+
+/*
 //transform numbers to roman numbers y viceversa
 const numeros=[["I","V"],["X","L"],["C","D"],["M"]];
 const romanos = crearMapa();
@@ -68,7 +151,7 @@ class RomanNumerals {
     return sol;
   }
 }
-
+*/
 /*
 // hacerlo en una linea (no es mi solucion)
 // const determinant = m => m.length === 1 ? m[0][0] : m[0].reduce((s, n, i) => s + (i % 2 === 0 ? 1 : -1) * n * determinant(m.slice(1).map(r => r.filter((_, j) => j !== i))), 0);
