@@ -2,7 +2,69 @@ window.onload = function () {
   console.log();
 }
 
+let cont = 0;
+let barcos = [];
+let correcto;
+let prohibir = [];
+let left = [4,3,3,2,2,2,1,1,1,1];
+function validateBattlefield(field){
+  //check if a field is correct for a battleships game
+  correcto = true;
+  for(let i = 0; i < field.length; i++){
+    for(let j=0;j<field[i].length;j++){
+      if(field[i][j]==1){
+        cont = 0;
+        verBarco(field,i,j);
+        if(cont>0){
+          barcos.push(cont);
+        }
+      }
+    }
+  }
+  if(barcos.length==10){
+    numBarcos(1,4);
+    numBarcos(2,3);
+    numBarcos(3,2);
+    numBarcos(4,1);
+  }else{
+    correcto = false;
+  }
+  return correcto;
+}
 
+function numBarcos(num, tamaño){
+  for(let i=0;i<num;i++){
+    if(barcos.includes(tamaño)){
+      barcos.splice(barcos.indexOf(tamaño),1);
+    }else{
+      correcto = false;
+    }
+  }
+}
+
+function verBarco(field,fila,columna){
+  for(let i = -1; i < 2; i++){
+    for(let j = -1; j < 2; j++){
+      let visitado = prohibir.includes((fila+i)+'-'+(columna+j));
+      prohibir.push((fila+i)+'-'+(columna+j));
+      if(desbordar(fila+i) && desbordar(columna+j) && field[fila+i][columna+j]==1 && !visitado){
+        cont++;
+        verBarco(field,(fila+i), (columna+j));
+      }
+    }
+  }
+}
+
+const desbordar = function (num,tablero) {
+  if (num < 0) {
+      return false;
+  } else if (num > tablero) {
+      return false;
+  }
+  return true;
+};
+
+/*
 let arr;
 let max;
 let resultado;
@@ -83,7 +145,7 @@ function palindrome() {
 function matchArray(num, array) {
   return array.includes(num);
 }
-
+*/
 /*
 //transform numbers to roman numbers y viceversa
 const numeros=[["I","V"],["X","L"],["C","D"],["M"]];
