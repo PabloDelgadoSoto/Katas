@@ -1,23 +1,61 @@
-import math
-primos=[2,3]
-def is_prime(num):
-    #negatives, 0 and 1 are not primes
-    if num<=1: return False
-    #calculating with already primes
-    if num in primos: return True
-    for p in primos:
-        if num%p==0:
-            return False
-    #only up to square root of number
-    limite=int(math.sqrt(num)+1)
-    divisor=primos[len(primos)-1]+2
-    while divisor < limite:
-        if is_prime(divisor):
-            primos.append(divisor)
-        if num%divisor==0:
-            return False
-        divisor+=2
-    return True
+import re
+lista=[]
+def order_weight(strng):
+    #order list by sum of digits, if its the same order alphabetically
+    lista.clear()
+    strng=re.sub(r' +', " ", strng)
+    strng=strng.strip()
+    strng=strng.split()
+    for i in strng:
+        suma(i)
+    sol=""
+    for i in range(len(lista)):
+        sol+=lista[i][0]+" "
+    return sol.strip()
+    
+def suma(n):
+    s=0
+    n=str(n)
+    for i in range(len(n)):
+        s+=int(n[i])
+    colocar(s,n)
+
+def colocar(s,n,lugar=0):
+    if len(lista)==lugar or len(lista)==0 or s<lista[lugar][1]:
+        lista.insert(lugar, [n,s])
+    elif s==lista[lugar][1]:
+        l=calcularOrden(n,s,lugar)
+        lista.insert(l, [n,s])
+    elif s>lista[lugar][1]:
+        colocar(s,n,lugar+1)
+        
+def calcularOrden(n,s,lugar):
+    if lugar<len(lista):
+        if s==lista[lugar][1]:
+            if n>lista[lugar][0]:
+                lugar=calcularOrden(n,s,lugar+1)
+    return lugar
+
+# import math
+# primos=[2,3]
+# def is_prime(num):
+#     #negatives, 0 and 1 are not primes
+#     if num<=1: return False
+#     #calculating with already primes
+#     if num in primos: return True
+#     for p in primos:
+#         if num%p==0:
+#             return False
+#     #only up to square root of number
+#     limite=int(math.sqrt(num)+1)
+#     divisor=primos[len(primos)-1]+2
+#     while divisor < limite:
+#         if is_prime(divisor):
+#             primos.append(divisor)
+#         if num%divisor==0:
+#             return False
+#         divisor+=2
+#     return True
 
 # def make_readable(seconds):
 # #transform seconds into hours minutes and seconds separated by ':'
