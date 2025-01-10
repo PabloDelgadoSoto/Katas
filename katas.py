@@ -1,12 +1,20 @@
-def odd_or_even(arr):
-#sum of digits of array is odd or even
-    sum = 0
-    for n in arr:
-        sum+=n
-    if sum%2:
-        return "odd"
-    else:
-        return "even"
+def filter_list(l):
+    #return a new list with the strings filtered out
+    sol = []
+    for i in l:
+        if type(i)!=str:
+            sol.append(i)
+    return sol
+
+# def odd_or_even(arr):
+# #sum of digits of array is odd or even
+#     sum = 0
+#     for n in arr:
+#         sum+=n
+#     if sum%2:
+#         return "odd"
+#     else:
+#         return "even"
 
 # def digital_root(n):
 # #sum of digits of a number, repeat until the result is only 1 digit
