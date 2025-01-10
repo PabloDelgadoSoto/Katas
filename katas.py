@@ -1,13 +1,27 @@
-def move_zeros(lst):
-#move all zeroes from an array to the end of it while keeping the order of the rest
-    cont=0
-    for i in lst:
-        if i==0:
-            cont+=1
-    for i in range(cont):
-        lst.remove(0)
-        lst.append(0)
-    return (lst)
+def make_readable(seconds):
+#transform seconds into hours minutes and seconds separated by ':'
+    sol=""
+    for i in range(3):
+        resto = seconds%60
+        if i==2:
+            resto=seconds
+        seconds /= 60
+        resto=str(int(resto))
+        if len(str(resto))==1:
+            resto=str(0)+str(resto)
+        sol=":"+resto+sol
+    return (sol[1:])
+
+# def move_zeros(lst):
+# #move all zeroes from an array to the end of it while keeping the order of the rest
+#     cont=0
+#     for i in lst:
+#         if i==0:
+#             cont+=1
+#     for i in range(cont):
+#         lst.remove(0)
+#         lst.append(0)
+#     return (lst)
 
 # import re
 # def to_camel_case(text):
