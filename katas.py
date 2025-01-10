@@ -1,16 +1,37 @@
-def make_readable(seconds):
-#transform seconds into hours minutes and seconds separated by ':'
-    sol=""
-    for i in range(3):
-        resto = seconds%60
-        if i==2:
-            resto=seconds
-        seconds /= 60
-        resto=str(int(resto))
-        if len(str(resto))==1:
-            resto=str(0)+str(resto)
-        sol=":"+resto+sol
-    return (sol[1:])
+import math
+primos=[2,3]
+def is_prime(num):
+    #negatives, 0 and 1 are not primes
+    if num<=1: return False
+    #calculating with already primes
+    if num in primos: return True
+    for p in primos:
+        if num%p==0:
+            return False
+    #only up to square root of number
+    limite=int(math.sqrt(num)+1)
+    divisor=primos[len(primos)-1]+2
+    while divisor < limite:
+        if is_prime(divisor):
+            primos.append(divisor)
+        if num%divisor==0:
+            return False
+        divisor+=2
+    return True
+
+# def make_readable(seconds):
+# #transform seconds into hours minutes and seconds separated by ':'
+#     sol=""
+#     for i in range(3):
+#         resto = seconds%60
+#         if i==2:
+#             resto=seconds
+#         seconds /= 60
+#         resto=str(int(resto))
+#         if len(str(resto))==1:
+#             resto=str(0)+str(resto)
+#         sol=":"+resto+sol
+#     return (sol[1:])
 
 # def move_zeros(lst):
 # #move all zeroes from an array to the end of it while keeping the order of the rest
