@@ -1,10 +1,20 @@
-def filter_list(l):
-    #return a new list with the strings filtered out
-    sol = []
-    for i in l:
-        if type(i)!=str:
-            sol.append(i)
-    return sol
+def square_digits(num):
+    # return square of every digit of a number concatenated
+    cadena = str(num)
+    solucion=""
+    for i in cadena:
+        sol=0
+        sol+=int(i)**2
+        solucion+=str(sol)
+    return (int(solucion))
+
+# def filter_list(l):
+#     #return a new list with the strings filtered out
+#     sol = []
+#     for i in l:
+#         if type(i)!=str:
+#             sol.append(i)
+#     return sol
 
 # def odd_or_even(arr):
 # #sum of digits of array is odd or even
