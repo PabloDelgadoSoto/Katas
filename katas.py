@@ -1,12 +1,25 @@
-def square_digits(num):
-    # return square of every digit of a number concatenated
-    cadena = str(num)
-    solucion=""
-    for i in cadena:
-        sol=0
-        sol+=int(i)**2
-        solucion+=str(sol)
-    return (int(solucion))
+import re
+def to_camel_case(text):
+#tansform a string into camelcase
+    if len(text)==0:
+        return ""
+    arr = re.split('[-|_]',text)
+    sol=""
+    for i in arr:
+        sol+=i[0].upper()+i[1:]
+    if text[0]!=text[0].upper():
+        sol=sol[0].lower()+sol[1:]
+    return (sol)
+
+# def square_digits(num):
+#     # return square of every digit of a number concatenated
+#     cadena = str(num)
+#     solucion=""
+#     for i in cadena:
+#         sol=0
+#         sol+=int(i)**2
+#         solucion+=str(sol)
+#     return (int(solucion))
 
 # def filter_list(l):
 #     #return a new list with the strings filtered out
