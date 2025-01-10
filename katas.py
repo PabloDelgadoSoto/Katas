@@ -1,15 +1,26 @@
-import re
-def to_camel_case(text):
-#tansform a string into camelcase
-    if len(text)==0:
-        return ""
-    arr = re.split('[-|_]',text)
-    sol=""
-    for i in arr:
-        sol+=i[0].upper()+i[1:]
-    if text[0]!=text[0].upper():
-        sol=sol[0].lower()+sol[1:]
-    return (sol)
+def move_zeros(lst):
+#move all zeroes from an array to the end of it while keeping the order of the rest
+    cont=0
+    for i in lst:
+        if i==0:
+            cont+=1
+    for i in range(cont):
+        lst.remove(0)
+        lst.append(0)
+    return (lst)
+
+# import re
+# def to_camel_case(text):
+# #tansform a string into camelcase
+#     if len(text)==0:
+#         return ""
+#     arr = re.split('[-|_]',text)
+#     sol=""
+#     for i in arr:
+#         sol+=i[0].upper()+i[1:]
+#     if text[0]!=text[0].upper():
+#         sol=sol[0].lower()+sol[1:]
+#     return (sol)
 
 # def square_digits(num):
 #     # return square of every digit of a number concatenated
