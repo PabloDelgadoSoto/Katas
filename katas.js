@@ -2,6 +2,46 @@ window.onload = function () {
   console.log();
 }
 
+function VigenèreCipher(key, abc) {
+  //series of caesar ciphers to cipher a single string
+  this.key = key;
+  this.abc = abc;
+  this.encode = function (str) {
+    let resultado = "";
+    let clave = key;
+    for(let i = 0; i < str.length; i++){
+      clave+=key[i%key.length];
+      let letra = str[i];
+      if(abc.includes(letra)){
+        let cambio = (abc.indexOf(clave[i])+abc.indexOf(letra))%abc.length;
+        resultado+=abc[cambio];
+      }else{
+        resultado+=letra;
+      }
+    }
+    return resultado;
+  };
+  this.decode = function (str) {
+    let resultado = "";
+    let clave = key;
+    for(let i = 0; i < str.length; i++){
+      clave+=key[i%key.length];
+      let letra = str[i];
+      if(abc.includes(letra)){
+        let cambio = (abc.indexOf(letra)-abc.indexOf(clave[i]))%abc.length;
+        if(cambio<0){
+          cambio+=abc.length;
+        }
+        resultado+=abc[cambio];
+      }else{
+        resultado+=letra;
+      }
+    }
+    return resultado;
+  };
+}
+
+/*
 let cont = 0;
 let barcos = [];
 let correcto;
@@ -63,7 +103,7 @@ const desbordar = function (num,tablero) {
   }
   return true;
 };
-
+*/
 /*
 let arr;
 let max;
