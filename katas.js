@@ -2,6 +2,144 @@ window.onload = function () {
   console.log();
 }
 
+//calculator that takes into account spaces, parenthesis, order in operations
+const cuentas = {
+  "+":function(n1,n2){return n1+n2},
+  "-":function(n1,n2){return n1-n2},
+  "*":function(n1,n2){return n1*n2},
+  "/":function(n1,n2){return n1/n2}
+}
+let cambiar = [];
+const calc = function (expression) {
+  expression="("+expression+")";
+  expression = expression.replaceAll(" ","");
+  while(expression.match(/[+|\-|*|/]/g)){
+    cambiar[0] = false;
+    s = reducir(expression);
+    let negativos = cambiarNegativos(s);
+    let guardado = negativos[1];
+    s = negativos[0];
+    let op = s.match(/[+|\-|*|/]/g);
+    let ph = s.replaceAll(/[+|\-|*|/]/g," ");
+    let nums = ph.split(" ");
+    let r = 0;
+    if(op==null){op = []};
+    while(op.length!=0){
+      if(s.includes("n")){
+        for(let i = 0; i < guardado.length; i++){
+          for(let j = 0; j < nums.length; j++){
+            nums[j] = nums[j].replace("n"+i+"n", guardado[i]);
+            s = s.replace("n"+i+"n", guardado[i]);
+            nums[j] = parseFloat(nums[j]);
+          }
+        }
+      }
+      let operar = calcularOrden(op);
+      //evita NaN cuando se introduce solo un negativo
+      if((op[operar]=="+"||op[operar]=="-")&&nums[operar]==""){
+        nums[operar]="0";
+      }
+      r = cuentas[op[operar]](parseFloat(nums[operar]),parseFloat(nums[operar+1]));
+      nums.splice(operar,1);
+      op.splice(operar,1);
+      nums[operar] = r;
+    }
+    nums[0]=""+nums[0];
+    nums[0]=cambiarSigno(nums[0])
+    //salir para cuando el resultado es negativo
+    if(nums[0]==expression){
+      break;
+    }
+    let inicioString = "(";
+    if(cambiar[0]){
+      inicioString = "-(";
+      if(nums[0]>0&&cambiar[1]>=0){
+        nums[0]="+"+nums[0];
+      }
+    }
+    expression = expression.replace(inicioString+s+")",nums[0]);
+    cambiar[0] = false;
+  }
+
+  expression = expression.replaceAll(/[(|)]/g,"");
+  return parseFloat(expression);
+}
+
+function cambiarSigno(r){
+  if(cambiar[0]){
+    if(r.includes("-")){
+      r=r.replace("-","");
+    }else{
+      r="-"+r;
+    }
+  }
+  return r;
+}
+
+function cambiarNegativos(str){
+  let n = str.match(/\D\-\d/g);
+  if(n==null){return [str,0]}
+  for(let i = 0; i < n.length; i++){
+    str = str.replace(n[i].substring(1), "n"+i+"n");
+    n[i]=n[i].substring(1);
+  }
+  return [str,n];
+}
+
+function calcularOrden(op){
+  let operar = 0;
+  if(op.includes("+") || op.includes("-")){
+    for(let i = 0; i < op.length; i++){
+      if(op[i]=="*"||op[i]=="/"){
+        operar = i;
+        return operar;
+      }
+    }
+  }
+  return operar;
+}
+
+function reducir(str){
+  let s = str;
+  while(s.includes("(")){
+    let p = encontrarParentesis(s);
+    cambiar[0] = false;
+    //mirar si el parentesis tiene resta antes
+    if(s[p[0]-1]=="-"){
+      cambiar[0] = true;
+      cambiar[1] = s[p[0]-2];
+    }
+    s = s.substring(p[0]+1, p[1]);
+  }
+  return s;
+}
+
+function encontrarParentesis(str){
+  let abrir = 0;
+  let cerrar = 0;
+  let contAbrir = 0;
+  let contCerrar = 0;
+  let encontrado = false;
+  for(let i = 0; i < str.length; i++){
+    if(str[i]==")"){
+      contCerrar++;
+      if(contCerrar-contAbrir==0){
+        cerrar=i;
+        break;
+      }
+    }
+    if(str[i]=="("){
+      if(!encontrado){
+        abrir = i;
+        encontrado = true;
+      }
+      contAbrir++;
+    }
+  }
+  return [abrir, cerrar];
+}
+
+/*
 function VigenèreCipher(key, abc) {
   //series of caesar ciphers to cipher a single string
   this.key = key;
@@ -40,7 +178,7 @@ function VigenèreCipher(key, abc) {
     return resultado;
   };
 }
-
+*/
 /*
 let cont = 0;
 let barcos = [];
